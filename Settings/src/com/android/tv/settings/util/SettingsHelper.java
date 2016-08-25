@@ -126,6 +126,14 @@ public class SettingsHelper {
         return SystemProperties.get(setting);
     }
 
+    public String getSystemIntProperty(String setting, Integer defaultValue) {
+        return String.valueOf(Settings.System.getInt(mContentResolver, setting, defaultValue));
+    }
+
+    public void setSystemIntProperty(String setting, String value) {
+        Settings.System.putInt(mContentResolver, setting, Integer.valueOf(value));
+    }
+
     /**
      * Returns a human readable description of the setting's value.
      */

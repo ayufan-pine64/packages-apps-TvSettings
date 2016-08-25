@@ -766,6 +766,8 @@
     <string name="system_hdcp_checking">HDCP checking</string>
     <!-- Title for HDMI optimization in System Settings Developer options [CHAR LIMIT=50] -->
     <string name="system_hdmi_optimization">HDMI optimization</string>
+    <!-- Title for HDMI resolution in System Settings Developer options [CHAR LIMIT=50] -->
+    <string name="system_hdmi_resolution">HDMI resolution</string>
     <!-- Title for reboot confirmation in System Settings Developer options [CHAR LIMIT=50] -->
     <string name="system_reboot_confirm">Restart now?</string>
     <!-- Description for reboot confirmation in System Settings Developer options [CHAR LIMIT=150] -->
@@ -841,6 +843,8 @@
     <string name="system_desc_hdcp_checking">Use for DRM content only</string>
     <!-- Description for HDMI optimization System Settings Developer options [CHAR LIMIT=200] -->
     <string name="system_desc_hdmi_optimization">Optimize display for maximum resolution or maximum framerate. This only affects Ultra HD displays. Changing this setting will restart your device.</string>
+    <!-- Description for HDMI resolution System Settings Developer options [CHAR LIMIT=200] -->
+    <string name="system_desc_hdmi_resolution">Choose display resolution. Changing this setting will restart your device.</string>
     <!-- Description for Bluetooth HCI Logging Developer option [CHAR LIMIT=100] -->
     <string name="system_desc_bt_hci_log">Enable Bluetooth HCI snoop logging</string>
     <!-- Description for usb debugging in System Settings Developer options [CHAR LIMIT=100] -->

@@ -157,6 +157,23 @@
         <item>1080p</item>
     </string-array>
 
+    <!-- Titles for HDMI resolution preference values [CHAR LIMIT=60] -->
+    <string-array name="hdmi_resolution_entries">
+        <item>HDMI 720P 60HZ</item>
+        <item>HDMI 1080P 60HZ</item>
+        <item>HDMI 2160P 30HZ</item>
+    </string-array>
+
+    <!-- Values for HDMI resolution preference values DO NOT TRANSLATE -->
+    <string-array name="hdmi_resolution_values">
+        <!-- Do not translate. -->
+        <item>5</item>
+        <!-- Do not translate. -->
+        <item>10</item>
+        <!-- Do not translate. -->
+        <item>28</item>
+    </string-array>
+
     <!-- Titles for captioning typeface preference. [CHAR LIMIT=35] -->
     <string-array name="captioning_typeface_selector_titles">
         <item>Default</item>

@@ -80,6 +80,8 @@ enum ActionType {
             R.string.system_desc_hdcp_checking),
     DEVELOPER_GENERAL_HDMI_OPTIMIZATION(R.string.system_hdmi_optimization,
             R.string.system_desc_hdmi_optimization),
+    DEVELOPER_GENERAL_HDMI_RESOLUTION(R.string.system_hdmi_resolution,
+            R.string.system_desc_hdmi_resolution),
     DEVELOPER_GENERAL_BT_HCI_LOG(R.string.system_bt_hci_log,
             R.string.system_desc_bt_hci_log),
     DEVELOPER_GENERAL_REBOOT(R.string.system_reboot_confirm,

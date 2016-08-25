@@ -75,6 +75,7 @@ public class DeveloperOptionsActivity extends BaseSettingsActivity
     private static final String HDCP_CHECKING_PROPERTY = "persist.sys.hdcp_checking";
 
     private static final String HDMI_OPTIMIZATION_PROPERTY = "persist.sys.hdmi.resolution";
+    private static final String HDMI_RESOLUTION_PROPERTY = Settings.System.HDMI_OUTPUT_MODE;
 
     private static SettingsHelper mHelper;
     private ContentResolver mContentResolver;
@@ -116,6 +117,9 @@ public class DeveloperOptionsActivity extends BaseSettingsActivity
                 mActions.add(ActionType.DEVELOPER_GENERAL_HDMI_OPTIMIZATION.toAction(mResources,
                         getHdmiOptimizationStatus(mHelper.getSystemProperties(
                                 HDMI_OPTIMIZATION_PROPERTY))));
+                mActions.add(ActionType.DEVELOPER_GENERAL_HDMI_RESOLUTION.toAction(mResources,
+                        getHdmiResolutionStatus(mHelper.getSystemIntProperty(
+                                HDMI_RESOLUTION_PROPERTY, 10))));
                 mActions.add(ActionType.DEVELOPER_GENERAL_BT_HCI_LOG.toAction(mResources,
                         mHelper.getStatusStringFromBoolean(
                                 mHelper.getSecureIntValueSettingToBoolean(
@@ -213,6 +217,13 @@ public class DeveloperOptionsActivity extends BaseSettingsActivity
                         mResources.getStringArray(R.array.hdmi_optimization_entries),
                         1 /* non zero check set ID */,
                         mHelper.getSystemProperties(HDMI_OPTIMIZATION_PROPERTY));
+                break;
+            case DEVELOPER_GENERAL_HDMI_RESOLUTION:
+                mActions = Action.createActionsFromArrays(
+                        mResources.getStringArray(R.array.hdmi_resolution_values),
+                        mResources.getStringArray(R.array.hdmi_resolution_entries),
+                        1 /* non zero check set ID */,
+                        mHelper.getSystemIntProperty(HDMI_RESOLUTION_PROPERTY, 10));
                 break;
             case DEVELOPER_DRAWING_ANIMATOR_DURATION_SCALE:
                 mActions = getAnimationScaleActions(INDEX_ANIMATOR_DURATION_SCALE);
@@ -334,6 +345,10 @@ public class DeveloperOptionsActivity extends BaseSettingsActivity
                 setView(R.string.system_hdmi_optimization, R.string.system_general,
                         R.string.system_desc_hdmi_optimization, 0);
                 break;
+            case DEVELOPER_GENERAL_HDMI_RESOLUTION:
+                setView(R.string.system_hdmi_resolution, R.string.system_general,
+                        R.string.system_desc_hdmi_resolution, 0);
+                break;
             case DEVELOPER_DRAWING_ANIMATOR_DURATION_SCALE:
                 setView(R.string.system_animator_duration_scale, R.string.system_drawing, 0, 0);
                 break;
@@ -383,6 +398,15 @@ public class DeveloperOptionsActivity extends BaseSettingsActivity
                 String currentValue = mHelper.getSystemProperties(HDMI_OPTIMIZATION_PROPERTY);
                 if (!key.equals(currentValue)) {
                     mHelper.setSystemProperties(HDMI_OPTIMIZATION_PROPERTY, key);
+                    setState(ActionType.DEVELOPER_GENERAL_REBOOT, true);
+                } else {
+                    goBack();
+                }
+                return;
+            case DEVELOPER_GENERAL_HDMI_RESOLUTION:
+                currentValue = mHelper.getSystemIntProperty(HDMI_RESOLUTION_PROPERTY, 10);
+                if (!key.equals(currentValue)) {
+                    mHelper.setSystemIntProperty(HDMI_RESOLUTION_PROPERTY, key);
                     setState(ActionType.DEVELOPER_GENERAL_REBOOT, true);
                 } else {
                     goBack();
@@ -831,6 +855,19 @@ public class DeveloperOptionsActivity extends BaseSettingsActivity
         int index = 0;
         String[] keys = getResources().getStringArray(R.array.hdmi_optimization_values);
         String[] summaries = getResources().getStringArray(R.array.hdmi_optimization_entries);
+        for (int keyIndex = 0; keyIndex < keys.length; ++keyIndex) {
+            if (keys[keyIndex].equals(value)) {
+                index = keyIndex;
+                break;
+            }
+        }
+        return summaries[index];
+    }
+
+    private String getHdmiResolutionStatus(String value) {
+        int index = 0;
+        String[] keys = getResources().getStringArray(R.array.hdmi_resolution_values);
+        String[] summaries = getResources().getStringArray(R.array.hdmi_resolution_entries);
         for (int keyIndex = 0; keyIndex < keys.length; ++keyIndex) {
             if (keys[keyIndex].equals(value)) {
                 index = keyIndex;
