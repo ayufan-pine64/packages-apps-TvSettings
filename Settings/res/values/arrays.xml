@@ -65,7 +65,6 @@
         <item>-1</item>
     </string-array>
 
-
     <!-- Titles for captioning typeface preference. [CHAR LIMIT=35] -->
     <string-array name="captioning_typeface_selector_titles">
         <item>Default</item>

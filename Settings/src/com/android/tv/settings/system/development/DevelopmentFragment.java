@@ -87,6 +87,8 @@ public class DevelopmentFragment extends LeanbackPreferenceFragment
     private static final String ENABLE_OEM_UNLOCK = "oem_unlock_enable";
     private static final String HDCP_CHECKING_KEY = "hdcp_checking";
     private static final String HDCP_CHECKING_PROPERTY = "persist.sys.hdcp_checking";
+    private static final String HDMI_RESOLUTION_KEY = "hdmi_resolution";
+    private static final String HDMI_RESOLUTION_PROPERTY = "persist.sys.hdmi.output_mode";
     private static final String LOCAL_BACKUP_PASSWORD = "local_backup_password";
     private static final String HARDWARE_UI_PROPERTY = "persist.sys.ui.hw";
     private static final String MSAA_PROPERTY = "debug.egl.force_msaa";
@@ -399,6 +401,11 @@ public class DevelopmentFragment extends LeanbackPreferenceFragment
             removePreferenceForProduction(hdcpChecking);
         }
 
+        Preference hdmiResolution = findPreference(HDMI_RESOLUTION_KEY);
+        if (hdmiResolution != null) {
+            mAllPrefs.add(hdmiResolution);
+        }
+
         // TODO: implement UI for TV
         removePreference(KEY_CONVERT_FBE);
 /*
@@ -588,6 +595,7 @@ public class DevelopmentFragment extends LeanbackPreferenceFragment
         updateSwitchPreference(mForceAllowOnExternal, Settings.Global.getInt(cr,
                 Settings.Global.FORCE_ALLOW_ON_EXTERNAL, 0) != 0);
         updateHdcpValues();
+        updateHdmiResolutionValues();
         updatePasswordSummary();
         updateDebuggerOptions();
         updateMockLocation();
@@ -665,6 +673,25 @@ public class DevelopmentFragment extends LeanbackPreferenceFragment
             hdcpChecking.setValue(values[index]);
             hdcpChecking.setSummary(summaries[index]);
             hdcpChecking.setOnPreferenceChangeListener(this);
+        }
+    }
+
+    private void updateHdmiResolutionValues() {
+        ListPreference hdmiResolution = (ListPreference) findPreference(HDMI_RESOLUTION_KEY);
+        if (hdmiResolution != null) {
+            String currentValue = SystemProperties.get(HDMI_RESOLUTION_PROPERTY);
+            String[] values = getResources().getStringArray(R.array.hdmi_resolution_values);
+            String[] summaries = getResources().getStringArray(R.array.hdmi_resolution_summaries);
+            int index = 0; // Defaults to drm-only. Needs to match with R.array.hdcp_checking_values
+            for (int i = 0; i < values.length; i++) {
+                if (currentValue.equals(values[i])) {
+                    index = i;
+                    break;
+                }
+            }
+            hdmiResolution.setValue(values[index]);
+            hdmiResolution.setSummary(summaries[index]);
+            hdmiResolution.setOnPreferenceChangeListener(this);
         }
     }
 
@@ -1647,6 +1674,11 @@ public class DevelopmentFragment extends LeanbackPreferenceFragment
         if (HDCP_CHECKING_KEY.equals(preference.getKey())) {
             SystemProperties.set(HDCP_CHECKING_PROPERTY, newValue.toString());
             updateHdcpValues();
+            pokeSystemProperties();
+            return true;
+        } else if (HDMI_RESOLUTION_KEY.equals(preference.getKey())) {
+            SystemProperties.set(HDMI_RESOLUTION_PROPERTY, newValue.toString());
+            updateHdmiResolutionValues();
             pokeSystemProperties();
             return true;
         } else if (preference == mLogdSize) {
