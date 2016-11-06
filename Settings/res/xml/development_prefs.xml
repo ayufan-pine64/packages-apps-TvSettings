@@ -52,13 +52,6 @@
         android:entries="@array/hdcp_checking_titles"
         android:entryValues="@array/hdcp_checking_values" />
 
-    <ListPreference
-        android:key="hdmi_resolution"
-        android:title="@string/hdmi_resolution_title"
-        android:dialogTitle="@string/hdmi_resolution_dialog_title"
-        android:entries="@array/hdmi_resolution_titles"
-        android:entryValues="@array/hdmi_resolution_values" />
-
     <SwitchPreference
         android:key="bt_hci_snoop_log"
         android:title="@string/bt_hci_snoop_log"
